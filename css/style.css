@@ -1,0 +1,94 @@
+:root {
+	--light-green:  #33cc33;
+	--light-green-bg:  #d6f5d6;
+	--footer-blue:  #2d5986;
+}
+
+/*animation css*/
+.ml4 {
+  position: relative;
+
+}
+.ml4 .letters {
+  position: absolute;
+  opacity: 0; 
+}
+
+body{
+	background-color: var(--light-green-bg);
+}
+
+.text-green {
+	color:  var(--light-green);
+}
+
+.custom-hover:hover {
+	font-weight: bold;
+	/*transform: translateY(-12px);*/
+}
+
+.inCustom {
+	border: none !important;
+	border-bottom: 1px solid grey !important;
+}
+
+input:focus {
+	outline:none !important;
+
+}
+.searchBar {
+	border: 1px solid black;
+	width: 55%;
+
+}
+
+#searchBtn {
+	border:  none;
+	background: none;
+}
+
+#searchBtn:hover{
+	cursor: pointer;
+}
+
+
+.image img {
+	width: 620px;
+	height: 400px;
+}
+
+/*footer*/
+ul{
+	list-style: none;
+}
+
+.footer{
+	background-color: var(--footer-blue);
+}
+
+a{
+	text-decoration: none;
+}
+a:hover{
+	border-bottom: 1px solid white;
+}
+
+.img-btn{
+	height: 40px;
+	display: block;
+	width:  120px;
+}
+
+.bl{
+	border-left: 4px solid green;
+}
+.bg-light-green {
+	background-color: var(--light-green-bg) !important;
+}
+
+/*media queries*/
+@media(min-width: 300) and (max-width: 738px) {
+	.studentImg{
+		display: none !important;
+	}
+}

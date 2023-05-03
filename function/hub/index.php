@@ -1,0 +1,136 @@
+<?php
+session_start();
+include('../mcn_db.php');
+?>
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<title>MCN Student Hub</title>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css'>
+	<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
+	<style>
+		.box{
+			border-radius: 13px;
+			box-shadow: 0 3px 10px -1px #756743;
+			border: solid 3px white;
+			background-color: white;
+		}
+		body{
+			background-color: #ecf7f5;
+		}
+		.banner{
+			background-color: #44ad22;
+			height: 100px;
+		}
+		h1{
+			color: white;
+		}
+	</style>
+	
+</head>
+<body>
+
+	<div class="container-fluid banner">
+		<h1><b>MCN Student Hub</b></h1>
+	</div>
+
+
+	<div class="container py-3">
+	</br>
+
+	<div class="row ">
+		<div class="col-md-12"> 
+
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<!-- form user info -->
+					<div class="card card-outline-secondary ">
+						<div class="card-header box">
+							<h3 class="mb-0">Login Via QR Code</h3>
+						</div>
+						</br>
+						<p>&nbsp;&nbsp; &nbsp;1: Open MCN App in Your Phone
+						</br>
+						&nbsp;&nbsp;&nbsp; 2: Click On QR Icon at Home Page
+					</br>
+					&nbsp;&nbsp;&nbsp; 3: Point your phone to this screen to capture the code
+				</br>
+				&nbsp;&nbsp;&nbsp; 4: Click on Proceed to Login Button
+			</p>
+			<?php
+			
+			$temp="";
+
+			if (isset($_POST["login"])) {
+				$token=$_POST['temp'];
+				echo "  Your IP Address Is: ".$token;
+
+				$key=$token;
+				$qry = "SELECT * FROM students WHERE token = '$key'";
+				$run=mysqli_query($con, $qry);
+				$data=mysqli_fetch_assoc($run);
+				$row=mysqli_num_rows($run);
+				if ($row>0) 
+				{
+					$_SESSION['key']=$key;
+					$_SESSION['id']=$data['mcn_id'];
+					$_SESSION=$data;
+					header("location:home.php");
+				}
+				else
+				{
+					?>
+					<script>
+						alert('Unauthorised Credential');
+					</script>
+					<?php
+				}
+			}
+			?> 
+			<div class="card-body " >
+				<form autocomplete="off" class="form" role="form" action="index.php" method="post" style="align-self: center;" >
+					<?php
+					include "phpqrcode/qrlib.php";
+					$PNG_TEMP_DIR = 'temp/';
+					if (!file_exists($PNG_TEMP_DIR))
+						mkdir($PNG_TEMP_DIR);
+
+					$filename = $PNG_TEMP_DIR . 'test.png';
+
+					//$codeString = "Web".date("Y/m/d").$_SERVER['REMOTE_ADDR'];
+
+					//test
+					$codeString ="a";
+
+
+					$temp=$codeString;
+
+					$filename = $PNG_TEMP_DIR . 'test' . md5($codeString) . '.png';
+
+					QRcode::png($codeString, $filename);
+
+					echo '<img src="' . $PNG_TEMP_DIR . basename($filename) . '"  height="150px" width="150px"/> <hr/>';
+
+
+					?>
+					<input type="hidden" name="temp"  value="<?php echo $temp;?>">
+					<div class="form-group row">
+						<label class="col-lg-3 col-form-label form-control-label"></label>
+						<div class="col-lg-9">
+							<input class="btn btn-primary" type="submit" name="login" value="Procced To Login">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div><!-- /form user info -->
+	</div>
+</div>
+
+</div><!--/col-->
+</div><!--/row-->
+
+</div><!--/container-->
+
+</body>
+</html>
