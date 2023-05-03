@@ -1,5 +1,5 @@
 <?php
-$servername = "";
+$servername = "192.0.2.1";
 $username = "root";
 $password = "";
 $dbname = "mcnonline_main";
